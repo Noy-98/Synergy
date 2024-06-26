@@ -48,7 +48,10 @@ public class MainFrame extends JFrame {
         getStartedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MainFrame.this, "Button Clicked!");
+                // Open the Login window
+                new Login();
+                // Close the current MainFrame
+                MainFrame.this.dispose();
             }
         });
 

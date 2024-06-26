@@ -9,7 +9,7 @@ public class Signup extends JFrame {
         initialize();
     }
 
-    public void initialize() {
+    private void initialize() {
         // Setting up the frame
         setTitle("Signup Page");
         setSize(500, 600);
@@ -66,14 +66,29 @@ public class Signup extends JFrame {
         signupButton.setContentAreaFilled(false);
         signupButton.setBorderPainted(false);
 
-        // Adding an action listener to the button
-        signupButton.addActionListener(e -> JOptionPane.showMessageDialog(Signup.this, "Signup Button Clicked!"));
+        // Adding an action listener to the signup button
+        signupButton.addActionListener(e -> {
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+            String confirmPassword = new String(confirmPasswordField.getPassword());
+
+            if (password.equals(confirmPassword)) {
+                UserStore.setUser(email, password); // Store user info in memory
+                JOptionPane.showMessageDialog(Signup.this, "Signup successful!");
+                new Login(); // Open the Login window
+                Signup.this.dispose(); // Close the current Signup window
+            } else {
+                JOptionPane.showMessageDialog(Signup.this, "Passwords do not match!");
+            }
+        });
 
         mainPanel.add(signupButton, gbc);
 
         // Adding main panel to frame
         add(mainPanel);
-        
+
         // Making the frame visible
         setVisible(true);
     }
@@ -95,7 +110,6 @@ public class Signup extends JFrame {
         textField.setOpaque(false);
         textField.setBorder(new RoundedBorder(20));
 
-        // Add focus listener to show/hide hint text
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -133,7 +147,6 @@ public class Signup extends JFrame {
         passwordField.setOpaque(false);
         passwordField.setBorder(new RoundedBorder(20));
 
-        // Add focus listener to show/hide hint text
         passwordField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -153,10 +166,6 @@ public class Signup extends JFrame {
         });
 
         return passwordField;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Signup());
     }
 
     // Custom border class for rounded corners
@@ -224,5 +233,9 @@ public class Signup extends JFrame {
             super.updateUI();
             setOpaque(false);
         }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Signup());
     }
 }

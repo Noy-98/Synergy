@@ -46,6 +46,9 @@ public class Login extends JFrame {
 
         // Creating the login button
         gbc.gridy++;
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.GREEN);
+
         JButton loginButton = new RoundedButton("Login");
         loginButton.setFont(new Font("Arial", Font.PLAIN, 15));
         loginButton.setForeground(Color.BLACK);
@@ -54,14 +57,43 @@ public class Login extends JFrame {
         loginButton.setContentAreaFilled(false);
         loginButton.setBorderPainted(false);
 
-        // Adding an action listener to the button
-        loginButton.addActionListener(e -> JOptionPane.showMessageDialog(Login.this, "Login Button Clicked!"));
+        // Adding an action listener to the login button
+        loginButton.addActionListener(e -> {
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+            if (UserStore.isUserValid(email, password)) {
+                JOptionPane.showMessageDialog(Login.this, "Login successful!");
+                new Dashboard(); // Open the Login window
+                Login.this.dispose(); // Close the current Signup window
+            } else {
+                JOptionPane.showMessageDialog(Login.this, "Invalid email or password!");
+            }
+        });
 
-        mainPanel.add(loginButton, gbc);
+        buttonPanel.add(loginButton);
+
+        // Creating the signup button
+        JButton signupButton = new RoundedButton("Signup");
+        signupButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        signupButton.setForeground(Color.BLACK);
+        signupButton.setBackground(Color.YELLOW);
+        signupButton.setOpaque(false);
+        signupButton.setContentAreaFilled(false);
+        signupButton.setBorderPainted(false);
+
+        // Adding an action listener to the signup button
+        signupButton.addActionListener(e -> {
+            new Signup(); // Open the Signup window
+            Login.this.dispose(); // Close the current Login window
+        });
+
+        buttonPanel.add(signupButton);
+
+        mainPanel.add(buttonPanel, gbc);
 
         // Adding main panel to frame
         add(mainPanel);
-        
+
         // Making the frame visible
         setVisible(true);
     }
@@ -82,7 +114,7 @@ public class Login extends JFrame {
         };
         textField.setOpaque(false);
         textField.setBorder(new RoundedBorder(20));
-        
+
         textField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -98,7 +130,7 @@ public class Login extends JFrame {
                 }
             }
         });
-        
+
         return textField;
     }
 
