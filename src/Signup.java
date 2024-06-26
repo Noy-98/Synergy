@@ -68,8 +68,6 @@ public class Signup extends JFrame {
 
         // Adding an action listener to the signup button
         signupButton.addActionListener(e -> {
-            String firstName = firstNameField.getText();
-            String lastName = lastNameField.getText();
             String email = emailField.getText();
             String password = new String(passwordField.getPassword());
             String confirmPassword = new String(confirmPasswordField.getPassword());
