@@ -63,7 +63,7 @@ public class Login extends JFrame {
             String password = new String(passwordField.getPassword());
             if (UserStore.isUserValid(email, password)) {
                 JOptionPane.showMessageDialog(Login.this, "Login successful!");
-                new Dashboard(); // Open the Login window
+                new ElectricityDashboard(); // Open the ElectricityDashboard window
                 Login.this.dispose(); // Close the current Signup window
             } else {
                 JOptionPane.showMessageDialog(Login.this, "Invalid email or password!");
